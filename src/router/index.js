@@ -1,3 +1,3 @@
 
 
-export * from './AppRouter.jsx'
+export * from './AppRouter'

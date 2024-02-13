@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { uiSlice , calendarSlice, authSlice  } from './index.js';
+import { uiSlice , calendarSlice, authSlice  } from './';
 
 
 export const store = configureStore({

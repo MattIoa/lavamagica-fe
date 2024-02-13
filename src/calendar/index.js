@@ -1,9 +1,9 @@
 
 
-export * from './components/CalendarEvent.jsx';
-export * from './components/CalendarModal.jsx';
-export * from './components/FabAddNew.jsx';
-export * from './components/FabDelete.jsx';
-export * from './components/Navbar.jsx';
+export * from './components/CalendarEvent';
+export * from './components/CalendarModal';
+export * from './components/FabAddNew';
+export * from './components/FabDelete';
+export * from './components/Navbar';
 
-export * from './pages/CalendarPage.jsx';
+export * from './pages/CalendarPage';

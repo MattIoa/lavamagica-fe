@@ -1,4 +1,4 @@
-import { useAuthStore } from "../../hooks/useAuthStore.js"
+import { useAuthStore } from "../../hooks/useAuthStore"
 
 
 export const Navbar = () => {

@@ -1,9 +1,9 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import { LoginPage } from '../auth/index.js';
-import { CalendarPage } from '../calendar/index.js';
+import { LoginPage } from '../auth';
+import { CalendarPage } from '../calendar';
 
-import { useAuthStore } from '../hooks/index.js';
+import { useAuthStore } from '../hooks';
 import { useEffect } from 'react';
 
 

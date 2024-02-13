@@ -1,8 +1,8 @@
 import { useDispatch , useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { convertEventsToDateEvents } from '../helpers/index.js';
-import {  onAddNewEvent , onDeleteEvent, onSetActiveEvent, onUpdateEvent, onLoadEvents} from '../store/index.js';
-import { calendarApi } from '../api/index.js';
+import { convertEventsToDateEvents } from '../helpers';
+import {  onAddNewEvent , onDeleteEvent, onSetActiveEvent, onUpdateEvent, onLoadEvents} from '../store';
+import { calendarApi } from '../api';
 
 export const useCalendarStore = () => {
   

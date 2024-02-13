@@ -10,7 +10,7 @@ import Modal from 'react-modal';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { useCalendarStore , useUiStore } from '../../hooks/index.js';
+import { useCalendarStore , useUiStore } from '../../hooks';
 
 
 import es from 'date-fns/locale/es';

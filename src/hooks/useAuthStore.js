@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
-import { calendarApi } from "../api/index.js";
-import { clearErrorMessage, onChecking, onLogin, onLogout, onLogoutCalendar  } from "../store/index.js";
+import { calendarApi } from "../api";
+import { clearErrorMessage, onChecking, onLogin, onLogout, onLogoutCalendar  } from "../store";
 
 
 

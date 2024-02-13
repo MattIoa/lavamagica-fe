@@ -3,10 +3,10 @@ import { Calendar } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 
-import { Navbar, CalendarEvent, CalendarModal, FabAddNew , FabDelete} from '../index.js';
+import { Navbar, CalendarEvent, CalendarModal, FabAddNew , FabDelete} from '../';
 
-import { localizer ,getMessagesES} from '../../helpers/index.js';
-import { useUiStore, useCalendarStore, useAuthStore  } from '../../hooks/index.js';
+import { localizer ,getMessagesES} from '../../helpers';
+import { useUiStore, useCalendarStore, useAuthStore  } from '../../hooks';
 
 
 
