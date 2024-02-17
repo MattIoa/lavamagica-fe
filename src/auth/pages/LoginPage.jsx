@@ -52,13 +52,13 @@ useEffect(() => {
         <div className="container login-container">
             <div className="row">
                 <div className="col-md-6 login-form-1">
-                    <h3>Ingreso</h3>
+                    <h3>Login</h3>
                     <form onSubmit={ loginSubmit }>
                         <div className="form-group mb-2">
                             <input 
                                 type="text"
                                 className="form-control"
-                                placeholder="Correo"
+                                placeholder="Email"
                                 name="loginEmail"
                                 value={ loginEmail }
                                 onChange={ onLoginInputChange }
@@ -68,13 +68,13 @@ useEffect(() => {
                             <input
                                 type="password"
                                 className="form-control"
-                                placeholder="Contraseña"
+                                placeholder="Password"
                                 name="loginPassword"
                                 value={ loginPassword }
                                 onChange={ onLoginInputChange }
                             />
                         </div>
-                        <div className="d-grid gap-2">
+                        <div className="d-grid gap-2 login-button">
                             <input 
                                 type="submit"
                                 className="btnSubmit"
@@ -85,13 +85,13 @@ useEffect(() => {
                 </div>
 
                 <div className="col-md-6 login-form-2">
-                    <h3>Registro</h3>
+                    <h3>Registrazione</h3>
                     <form onSubmit={ registerSubmit }>
                         <div className="form-group mb-2">
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Nombre"
+                                placeholder="Nome"
                                 name="registerName"
                                 value={ registerName }
                                 onChange={ onRegisterInputChange }
@@ -101,7 +101,7 @@ useEffect(() => {
                             <input
                                 type="email"
                                 className="form-control"
-                                placeholder="Correo"
+                                placeholder="Email"
                                 name="registerEmail"
                                 value={ registerEmail }
                                 onChange={ onRegisterInputChange }
@@ -111,7 +111,7 @@ useEffect(() => {
                             <input
                                 type="password"
                                 className="form-control"
-                                placeholder="Contraseña" 
+                                placeholder="Passoword"
                                 name="registerPassword"
                                 value={ registerPassword }
                                 onChange={ onRegisterInputChange }
@@ -122,18 +122,18 @@ useEffect(() => {
                             <input
                                 type="password"
                                 className="form-control"
-                                placeholder="Repita la contraseña" 
+                                placeholder="Conferma Password"
                                 name="registerPassword2"
                                 value={ registerPassword2 }
                                 onChange={ onRegisterInputChange }
                             />
                         </div>
 
-                        <div className="d-grid gap-2">
+                        <div className="d-grid gap-2 login-button">
                             <input 
                                 type="submit" 
                                 className="btnSubmit" 
-                                value="Crear cuenta" />
+                                value="Crea Account" />
                         </div>
                     </form>
                 </div>

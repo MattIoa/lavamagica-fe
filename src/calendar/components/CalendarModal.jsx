@@ -127,7 +127,7 @@ export const CalendarModal = () => {
          className="form-control"
          dateFormat="Pp"
          showTimeSelect
-         locale="es"
+         locale="it"
          timeCaption="Hora"
         />
     </div>
@@ -141,7 +141,7 @@ export const CalendarModal = () => {
          className="form-control"
          dateFormat="Pp"
          showTimeSelect
-         locale="es"
+         locale="it"
          timeCaption="Hora"
         />
     </div>
