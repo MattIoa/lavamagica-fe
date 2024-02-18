@@ -1,13 +1,14 @@
 import axios from 'axios';
 import { getEnvVariables } from '../helpers';
 
-const { VITE_API_URL } = getEnvVariables()
+const { VITE_API_URL, VITE_API_URL_LOCAL } = getEnvVariables()
 
 
+const baseURL = window.location.href.includes('localhost') ? VITE_API_URL_LOCAL : VITE_API_URL;
 
 
 const calendarApi = axios.create({
-    baseURL: VITE_API_URL
+    baseURL: baseURL
 });
 
 // Todo: configurar interceptores

@@ -52,10 +52,12 @@ export const useCalendarStore = () => {
 
     const startLoadingEvents = async() => {
         try {
-            
             const { data } = await calendarApi.get('/events');
-            const events = convertEventsToDateEvents( data.eventos );          
-            dispatch( onLoadEvents( events ) );
+            const events = convertEventsToDateEvents( data.eventos );
+            console.log(user)
+            const filteredEvents = events.filter(events => events.user._id === user.uid)
+            dispatch( onLoadEvents( filteredEvents ) );
+            console.log(filteredEvents)
 
 
         } catch (error) {
