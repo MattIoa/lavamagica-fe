@@ -111,7 +111,7 @@ useEffect(() => {
                             <input
                                 type="password"
                                 className="form-control"
-                                placeholder="Passoword"
+                                placeholder="Password"
                                 name="registerPassword"
                                 value={ registerPassword }
                                 onChange={ onRegisterInputChange }
@@ -122,7 +122,7 @@ useEffect(() => {
                             <input
                                 type="password"
                                 className="form-control"
-                                placeholder="Conferma Password"
+                                placeholder="Conferma password"
                                 name="registerPassword2"
                                 value={ registerPassword2 }
                                 onChange={ onRegisterInputChange }

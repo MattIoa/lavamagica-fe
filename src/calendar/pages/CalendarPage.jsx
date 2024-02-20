@@ -66,7 +66,8 @@ export const CalendarPage = () => {
     <>
       <Navbar />
       <Calendar
-      culture='es'
+      culture='it'
+      views={['month', 'agenda']}
       localizer={localizer}
       events={events}
       defaultView={ ['month'] }
