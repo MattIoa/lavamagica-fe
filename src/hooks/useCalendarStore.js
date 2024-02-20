@@ -54,9 +54,13 @@ export const useCalendarStore = () => {
         try {
             const { data } = await calendarApi.get('/events');
             const events = convertEventsToDateEvents( data.eventos );
-            console.log(user)
-            const filteredEvents = events.filter(events => events.user._id === user.uid)
-            dispatch( onLoadEvents( filteredEvents ) );
+            if(user.uid === '65d3b165833412c798cb2c99') {
+            dispatch( onLoadEvents( events ) );
+            } else {
+                const filteredEvents = events.filter(events => events.user._id === user.uid)
+                dispatch( onLoadEvents( filteredEvents ) );
+            }
+           
             console.log(filteredEvents)
 
 
