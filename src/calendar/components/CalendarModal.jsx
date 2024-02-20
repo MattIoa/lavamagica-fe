@@ -11,10 +11,11 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { useCalendarStore , useUiStore } from '../../hooks';
+import './CalendarModal.css'
 
 
-import es from 'date-fns/locale/es';
-registerLocale( 'es',es);
+import it from 'date-fns/locale/it';
+registerLocale( 'it',it);
 
 
 const customStyles = {
@@ -120,7 +121,7 @@ export const CalendarModal = () => {
 <form className="container" onSubmit= {onSubmit}>
 
     <div className="form-group mb-2">
-        <label>Check-in</label>
+        <label className='check-label'>Check-in</label>
         <DatePicker
          selected={ formValues.start }
          onChange={ (event) => onDateChanged(event, 'start') }
@@ -133,7 +134,7 @@ export const CalendarModal = () => {
     </div>
 
     <div className="form-group mb-2">
-        <label>Check-out</label>
+        <label className='check-label'>Check-out</label>
         <DatePicker
         minDate={ formValues.start }
         selected={ formValues.end}
@@ -152,7 +153,6 @@ export const CalendarModal = () => {
         <input 
             type="text" 
             className={`form-control ${ titleClass }`}
-            placeholder="Appartamento"
             name="title"
             autoComplete="off"
             value={formValues.title}

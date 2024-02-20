@@ -69,7 +69,7 @@ export const CalendarPage = () => {
       culture='es'
       localizer={localizer}
       events={events}
-      defaultView={ lastView }
+      defaultView={ ['month'] }
       startAccessor="start"
       endAccessor="end"
       style={{ height: 'calc( 100vh - 80px )' }}
