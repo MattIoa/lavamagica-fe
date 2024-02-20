@@ -4,7 +4,7 @@ import it from 'date-fns/locale/it';
 
 
 const locales = {
-  'es': it,
+  'it': it,
 }
 
 export const localizer = dateFnsLocalizer({
