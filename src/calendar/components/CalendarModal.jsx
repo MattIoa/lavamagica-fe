@@ -42,7 +42,8 @@ const inputContainer = {
 const labelContainer = {
     display: 'flex',
     flexBasis: '45%',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center'
 }
 Modal.setAppElement('#root');
 
