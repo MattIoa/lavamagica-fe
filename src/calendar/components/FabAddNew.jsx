@@ -11,6 +11,10 @@ export const FabAddNew = () => {
         setActiveEvent({
             title: '',
             notes: '',
+            guest: '',
+            singleBed: '',
+            doubleBed: '',
+            bathRoom: '',
             start: new Date(),
             end: addHours( new Date(), 2 ),
             bgColor: '#fafafa',
