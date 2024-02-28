@@ -9,14 +9,6 @@ import { localizer ,getMessagesIT} from '../../helpers';
 import { useUiStore, useCalendarStore, useAuthStore  } from '../../hooks';
 
 
-
-
-
-
-
-
-
-
 export const CalendarPage = () => {
 
   const { user } = useAuthStore();
@@ -82,10 +74,12 @@ export const CalendarPage = () => {
       onDoubleClickEvent={ onDoubleClick }
         onSelectEvent={ onSelect }
         onView={ onViewChanged }
+      popup
     />
     <CalendarModal/>
     <FabAddNew/>
     <FabDelete/>
     </>
   )
+
 }
