@@ -14,7 +14,8 @@ export const FabDelete = () => {
         className="btn btn-danger fab-danger"
         onClick={ handleDelete }
         style={{
-            display: hasEventSelected ? '': 'none'
+            display: hasEventSelected ? '': 'none',
+            zIndex: '10'
         }}
     >
         <i className="fas fa-trash-alt"></i>

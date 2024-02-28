@@ -3,6 +3,9 @@ import { addHours } from 'date-fns';
 import { useCalendarStore, useUiStore } from '../../hooks';
 export const FabAddNew = () => {
 
+    const style = {
+        zIndex: '100'
+    }
 
   const { openDateModal } = useUiStore();
     const { setActiveEvent } = useCalendarStore();
@@ -10,7 +13,6 @@ export const FabAddNew = () => {
     const handleClickNew = () => {
         setActiveEvent({
             title: '',
-            notes: '',
             guest: '',
             singleBed: '',
             doubleBed: '',
@@ -27,6 +29,7 @@ export const FabAddNew = () => {
     }
   return (
     <button
+        style={{zIndex: '10'}}
         className="btn btn-primary fab"
        onClick={ handleClickNew }
     >
