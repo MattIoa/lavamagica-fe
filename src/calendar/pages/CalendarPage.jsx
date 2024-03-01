@@ -25,7 +25,8 @@ export const CalendarPage = () => {
       backgroundColor: isMyEvent ? '#347CF7' : '#465660',
       borderRadius: '0px',
       opacity: 0.8,
-      color: 'white'
+      color: 'white',
+      fontSize: window.innerWidth < 1920 ? '10px' : '16px',
     }
   
     return {
@@ -59,7 +60,6 @@ export const CalendarPage = () => {
       <Navbar />
       <Calendar
       culture='it'
-      views={['month', 'agenda']}
       localizer={localizer}
       events={events}
       defaultView={ ['month'] }
@@ -74,7 +74,6 @@ export const CalendarPage = () => {
       onDoubleClickEvent={ onDoubleClick }
         onSelectEvent={ onSelect }
         onView={ onViewChanged }
-      popup
     />
     <CalendarModal/>
     <FabAddNew/>
