@@ -45,7 +45,7 @@ export const useCalendarStore = () => {
         dispatch( onDeleteEvent() );
     } catch (error) {
         console.log(error);
-        Swal.fire('Error al eliminar', error.response.data.msg, 'error');
+        Swal.fire("Errore nell'eliminazione", error.response.data.msg, 'error');
     }
     }
 
