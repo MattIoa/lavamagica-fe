@@ -62,7 +62,6 @@ export const CalendarModal = () => {
         guest: '',
         singleBed: '',
         doubleBed: '',
-        bathRoom: '',
         start: new Date(),
         end: addHours(new Date(), 2),
     });
@@ -194,11 +193,6 @@ export const CalendarModal = () => {
                         <span>Letti Matr.</span>
                         <InputNumber value={formValues.doubleBed} onValueChange={onInputChanged} min={0} max={100} placeholder={'0'}
                                      name='doubleBed'/>
-                    </div>
-                    <div style={labelContainer}>
-                        <span>Bagno</span>
-                        <InputNumber value={formValues.bathRoom} onValueChange={onInputChanged} min={0} max={100} placeholder={'0'}
-                                     name='bathRoom'/>
                     </div>
                 </div>
                     <button
