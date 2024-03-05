@@ -63,7 +63,7 @@ export const CalendarModal = () => {
         singleBed: '',
         doubleBed: '',
         start: new Date(),
-        end: addHours(new Date(), 2),
+        end: addHours(new Date(), 1),
     });
 
     const titleClass = useMemo(() => {
@@ -91,10 +91,15 @@ export const CalendarModal = () => {
     }
 
     const onDateChanged = (event, changing) => {
-        setFormValues({
-            ...formValues,
-            [changing]: event
-        })
+        if (changing === 'start') {
+            const newStartDate = event;
+            const newEndDate = addHours(event, 1); // Aggiunge un'ora alla data di inizio per impostare la fine dell'evento
+            setFormValues({
+                ...formValues,
+                start: newStartDate,
+                end: newEndDate
+            });
+        }
     }
 
     const onCloseModal = () => {
@@ -109,8 +114,7 @@ export const CalendarModal = () => {
         const difference = differenceInSeconds(formValues.end, formValues.start);
 
         if (isNaN(difference) || difference <= 0) {
-            Swal.fire('Fechas incorrectas', 'Revisar las fechas ingresadas', 'error');
-            console.log('Error en fechas');
+            Swal.fire('Differenza Incorretta', 'Rivedere gli orari', 'error');
             return;
         }
 
@@ -138,9 +142,10 @@ export const CalendarModal = () => {
             <form className="container" onSubmit={onSubmit}>
 
                 <div className="form-group mb-2">
-                    <label className='check-label'>Check-in</label>
+                    <label className='check-label'>Check-Out</label>
                     <DatePicker
-                        selected={formValues.start}
+                        selected={formValues.start
+                    }
                         onChange={(event) => onDateChanged(event, 'start')}
                         className="form-control"
                         dateFormat="Pp"
@@ -148,22 +153,18 @@ export const CalendarModal = () => {
                         locale="it"
                         timeCaption="Hora"
                     />
-                </div>
-
-                <div className="form-group mb-2">
-                    <label className='check-label'>Check-out</label>
+                    <div  style={{ display: 'none'}}>
                     <DatePicker
-                        minDate={formValues.start}
                         selected={formValues.end}
-                        onChange={(event) => onDateChanged(event, 'end')}
+                        onChange={(event) => onDateChanged(event, 'end')} // Imposta la fine dell'evento
                         className="form-control"
                         dateFormat="Pp"
                         showTimeSelect
                         locale="it"
                         timeCaption="Hora"
                     />
+                    </div>
                 </div>
-
                 <hr/>
                 <div className="form-group mb-2">
                     <label style={{marginBottom: '10px'}}>Appartamento</label>

@@ -26,7 +26,7 @@ export const CalendarPage = () => {
       borderRadius: '0px',
       opacity: 0.8,
       color: 'white',
-      fontSize: window.innerWidth < 1920 ? '10px' : '16px',
+      fontSize: window.innerWidth < 1280 ? '10px' : '16px',
     }
   
     return {

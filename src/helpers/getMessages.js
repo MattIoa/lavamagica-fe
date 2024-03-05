@@ -12,6 +12,6 @@ export const getMessagesIT = () => {
         time: 'Ora',
         event: 'Evento',
         noEventsInRange: 'Nessun evento in questo intervallo',
-        showMore: (total) => `+ Mostra di più (${total})`,
+        showMore: (total) => `+ ${total}`,
     };
 };
