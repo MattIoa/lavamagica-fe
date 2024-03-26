@@ -5,14 +5,14 @@ import {  onAddNewEvent , onDeleteEvent, onSetActiveEvent, onUpdateEvent, onLoad
 import { calendarApi } from '../api';
 
 export const useCalendarStore = () => {
-  
+
     const dispatch = useDispatch();
-    const { events, activeEvent } = useSelector( state => state.calendar );
+    const { events, activeEvent, filteredEvents } = useSelector( state => state.calendar );
     const { user } = useSelector( state => state.auth );
 
     const setActiveEvent = ( calendarEvent ) => {
         dispatch( onSetActiveEvent( calendarEvent ) )
-    } 
+    }
 
     const startSavingEvent = async( calendarEvent ) => {
         // TODO: Update evenet
@@ -24,18 +24,18 @@ export const useCalendarStore = () => {
                 await calendarApi.put(`/events/${ calendarEvent.id }`, calendarEvent );
                 dispatch( onUpdateEvent({ ...calendarEvent }) );
                 return;
-            } 
+            }
                 // Creando
                 const { data } = await calendarApi.post('/events', calendarEvent );
                 dispatch( onAddNewEvent({ ...calendarEvent, id: data.evento.id, user }) );
-            
+
         } catch (error) {
             console.log(error);
             Swal.fire('Error al guardar', error.response.data.msg, 'error');
-            
+
         }
-        
-        
+
+
     }
 
     const startDeletingEvent = async () => {
@@ -50,30 +50,31 @@ export const useCalendarStore = () => {
     }
 
 
-    const startLoadingEvents = async() => {
+    const startLoadingEvents = async(username) => {
         try {
             const { data } = await calendarApi.get('/events');
-            const events = convertEventsToDateEvents( data.eventos );
-            if(user.uid === '65d3b165833412c798cb2c99') {
-            dispatch( onLoadEvents( events ) );
+            const events = convertEventsToDateEvents(data.eventos);
+
+            if (username) {
+                const filteredEvents = events.filter(event => event.user.name === username);
+                dispatch(onLoadEvents(filteredEvents));
+            } else if (user.name === 'Admin') {
+                dispatch(onLoadEvents(events));
             } else {
-                const filteredEvents = events.filter(events => events.user._id === user.uid)
-                dispatch( onLoadEvents( filteredEvents ) );
+                const userEvents = events.filter(event => event.user.name === user.name);
+                dispatch(onLoadEvents(userEvents));
             }
-           
-            console.log(filteredEvents)
-
-
         } catch (error) {
-          console.log('Error cargando eventos');
-          console.log(error)
+            console.log('Errore nel caricamento degli eventi');
+            console.log(error);
         }
-    }
+    };
 
     return {
         //* Propiedades
         activeEvent,
         events,
+        filteredEvents,
         hasEventSelected: !!activeEvent,
 
         //* Métodos
