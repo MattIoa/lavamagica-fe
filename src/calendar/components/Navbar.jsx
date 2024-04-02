@@ -27,6 +27,8 @@ export const Navbar = () => {
         }
     }, []);
 
+    console.log(user)
+
     return (
         <div className="navbar navbar-dark bg-dark mb-4 px-4">
         <span className="navbar-brand">
@@ -34,8 +36,9 @@ export const Navbar = () => {
             &nbsp;
             { user.name }
         </span>
-
+            {user.name === "Admin" && (
             <select
+
                 className="form-select form-select-sm me-2"
                 style={{ width: "auto", display: "inline-block" }}
                 value={selectedUsername}
@@ -46,7 +49,7 @@ export const Navbar = () => {
                     <option key={index} value={username}>{username}</option>
                 ))}
             </select>
-
+                )}
             <button className="btn btn-outline-danger" onClick={ startLogout }>
                 <i className="fas fa-sign-out-alt"></i>
                 &nbsp;

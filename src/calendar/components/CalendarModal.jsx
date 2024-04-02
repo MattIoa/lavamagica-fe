@@ -33,11 +33,11 @@ const customStyles = {
 };
 
 const inputContainer = {
-        display: 'flex',
-        gap:'10px',
-        justifyContent: 'space-between',
-        margin: '30px 0 30px 0',
-        flexWrap:'wrap'
+    display: 'flex',
+    gap:'10px',
+    justifyContent: 'space-between',
+    margin: '30px 0 30px 0',
+    flexWrap:'wrap'
 }
 const labelContainer = {
     display: 'flex',
@@ -62,8 +62,9 @@ export const CalendarModal = () => {
         guest: '',
         singleBed: '',
         doubleBed: '',
+        bathRoom: '',
         start: new Date(),
-        end: addHours(new Date(), 1),
+        end: addHours(new Date(), 2),
     });
 
     const titleClass = useMemo(() => {
@@ -91,15 +92,10 @@ export const CalendarModal = () => {
     }
 
     const onDateChanged = (event, changing) => {
-        if (changing === 'start') {
-            const newStartDate = event;
-            const newEndDate = addHours(event, 1); // Aggiunge un'ora alla data di inizio per impostare la fine dell'evento
-            setFormValues({
-                ...formValues,
-                start: newStartDate,
-                end: newEndDate
-            });
-        }
+        setFormValues({
+            ...formValues,
+            [changing]: event
+        })
     }
 
     const onCloseModal = () => {
@@ -114,7 +110,8 @@ export const CalendarModal = () => {
         const difference = differenceInSeconds(formValues.end, formValues.start);
 
         if (isNaN(difference) || difference <= 0) {
-            Swal.fire('Differenza Incorretta', 'Rivedere gli orari', 'error');
+            Swal.fire('Fechas incorrectas', 'Revisar las fechas ingresadas', 'error');
+            console.log('Error en fechas');
             return;
         }
 
@@ -142,10 +139,9 @@ export const CalendarModal = () => {
             <form className="container" onSubmit={onSubmit}>
 
                 <div className="form-group mb-2">
-                    <label className='check-label'>Check-Out</label>
+                    <label className='check-label'>Check-in</label>
                     <DatePicker
-                        selected={formValues.start
-                    }
+                        selected={formValues.start}
                         onChange={(event) => onDateChanged(event, 'start')}
                         className="form-control"
                         dateFormat="Pp"
@@ -153,18 +149,22 @@ export const CalendarModal = () => {
                         locale="it"
                         timeCaption="Hora"
                     />
-                    <div  style={{ display: 'none'}}>
+                </div>
+
+                <div className="form-group mb-2">
+                    <label className='check-label'>Check-out</label>
                     <DatePicker
+                        minDate={formValues.start}
                         selected={formValues.end}
-                        onChange={(event) => onDateChanged(event, 'end')} // Imposta la fine dell'evento
+                        onChange={(event) => onDateChanged(event, 'end')}
                         className="form-control"
                         dateFormat="Pp"
                         showTimeSelect
                         locale="it"
                         timeCaption="Hora"
                     />
-                    </div>
                 </div>
+
                 <hr/>
                 <div className="form-group mb-2">
                     <label style={{marginBottom: '10px'}}>Appartamento</label>
@@ -196,16 +196,16 @@ export const CalendarModal = () => {
                                      name='doubleBed'/>
                     </div>
                 </div>
-                    <button
-                        type="submit"
-                        className="btn btn-outline-primary btn-block"
-                    >
-                        <i className="far fa-save"></i>
-                        <span> Salva</span>
-                    </button>
+                <button
+                    type="submit"
+                    className="btn btn-outline-primary btn-block"
+                >
+                    <i className="far fa-save"></i>
+                    <span> Salva</span>
+                </button>
 
             </form>
 
         </Modal>
-)
+    )
 }
