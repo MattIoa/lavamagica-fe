@@ -63,11 +63,13 @@ export const CalendarPage = () => {
       startLoadingEvents()
     }
   }, []);
+
+
   return (
       <>
         <Navbar/>
         <div>
-          <ExportEventsButton/>
+            {user.name === 'Admin' && <ExportEventsButton/>}
         </div>
         <Calendar
             culture='it'
