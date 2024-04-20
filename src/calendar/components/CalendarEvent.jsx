@@ -1,7 +1,6 @@
 export const CalendarEvent = ({ event }) => {
 
     const { title, user, end, start, guest } = event;
-    console.log(guest); // <-- Stampa l'intero oggetto event
 
     return (
         <>
