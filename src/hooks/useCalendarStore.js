@@ -51,17 +51,93 @@ export const useCalendarStore = () => {
 
 
     const startLoadingEvents = async(username) => {
+        if(localStorage.getItem('selectedView') === '') {
+            try {
+                const {data} = await calendarApi.get('/events');
+                const events = convertEventsToDateEvents(data.eventos);
+                console.log(events)
+
+                if (username) {
+                    const filteredEvents = events.filter(event => event.user.name === username);
+                    dispatch(onLoadEvents(filteredEvents));
+                } else if (user.name === 'Admin') {
+                    dispatch(onLoadEvents(events));
+                } else {
+                    const userEvents = events.filter(event => event.user.name === user.name);
+                    dispatch(onLoadEvents(userEvents));
+                }
+            } catch (error) {
+                console.log('Errore nel caricamento degli eventi');
+                console.log(error);
+            }
+        } else if((localStorage.getItem('selectedView') === 'filterStartEvents')) {
+            try {
+                const { data } = await calendarApi.get('/events');
+                const events = convertEventsToDateEvents(data.eventos);
+
+                // Aggiorna la data di fine degli eventi per essere un'ora dopo la data di inizio
+                const updatedEvents = events.map(event => ({
+                    ...event,
+                    end: new Date(new Date(event.start).getTime()) // Aggiunge un'ora
+                }));
+
+                if (username) {
+                    const filteredEvents = updatedEvents.filter(event => event.user.name === username);
+                    dispatch(onLoadEvents(filteredEvents));
+                } else if (user.name === 'Admin') {
+                    dispatch(onLoadEvents(updatedEvents));
+                } else {
+                    const userEvents = updatedEvents.filter(event => event.user.name === user.name);
+                    dispatch(onLoadEvents(userEvents));
+                }
+            } catch (error) {
+                console.log('Errore nel caricamento degli eventi');
+                console.log(error);
+            }
+        } else {
+            try {
+                const { data } = await calendarApi.get('/events');
+                const events = convertEventsToDateEvents(data.eventos);
+
+                const updatedEvents = events.map(event => ({
+                    ...event,
+                    start: new Date(new Date(event.end).getTime()) // Aggiunge un'ora
+                }));
+
+                if (username) {
+                    const filteredEvents = updatedEvents.filter(event => event.user.name === username);
+                    dispatch(onLoadEvents(filteredEvents));
+                } else if (user.name === 'Admin') {
+                    dispatch(onLoadEvents(updatedEvents));
+                } else {
+                    const userEvents = updatedEvents.filter(event => event.user.name === user.name);
+                    dispatch(onLoadEvents(userEvents));
+                }
+            } catch (error) {
+                console.log('Errore nel caricamento degli eventi');
+                console.log(error);
+            }
+        }
+    };
+
+    const filterStartEvents = async (username) => {
         try {
             const { data } = await calendarApi.get('/events');
             const events = convertEventsToDateEvents(data.eventos);
 
+            // Aggiorna la data di fine degli eventi per essere un'ora dopo la data di inizio
+            const updatedEvents = events.map(event => ({
+                ...event,
+                end: new Date(new Date(event.start).getTime()) // Aggiunge un'ora
+            }));
+
             if (username) {
-                const filteredEvents = events.filter(event => event.user.name === username);
+                const filteredEvents = updatedEvents.filter(event => event.user.name === username);
                 dispatch(onLoadEvents(filteredEvents));
             } else if (user.name === 'Admin') {
-                dispatch(onLoadEvents(events));
+                dispatch(onLoadEvents(updatedEvents));
             } else {
-                const userEvents = events.filter(event => event.user.name === user.name);
+                const userEvents = updatedEvents.filter(event => event.user.name === user.name);
                 dispatch(onLoadEvents(userEvents));
             }
         } catch (error) {
@@ -69,6 +145,32 @@ export const useCalendarStore = () => {
             console.log(error);
         }
     };
+    const filterEndEvents = async (username) => {
+        try {
+            const { data } = await calendarApi.get('/events');
+            const events = convertEventsToDateEvents(data.eventos);
+
+            const updatedEvents = events.map(event => ({
+                ...event,
+                start: new Date(new Date(event.end).getTime()) // Aggiunge un'ora
+            }));
+
+            if (username) {
+                const filteredEvents = updatedEvents.filter(event => event.user.name === username);
+                dispatch(onLoadEvents(filteredEvents));
+            } else if (user.name === 'Admin') {
+                dispatch(onLoadEvents(updatedEvents));
+            } else {
+                const userEvents = updatedEvents.filter(event => event.user.name === user.name);
+                dispatch(onLoadEvents(userEvents));
+            }
+        } catch (error) {
+            console.log('Errore nel caricamento degli eventi');
+            console.log(error);
+        }
+    };
+
+
 
     return {
         //* Propiedades
@@ -82,5 +184,7 @@ export const useCalendarStore = () => {
         setActiveEvent,
         startSavingEvent,
         startLoadingEvents,
+        filterStartEvents,
+        filterEndEvents,
     }
 }
