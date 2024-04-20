@@ -8,9 +8,9 @@ export const ExportEventsButton = () => {
     const exportToExcel = () => {
         // Preparazione dei dati per il foglio di calcolo Excel
         const data = events.map(event => ({
-            "Titolo": event.title,
-            "Inizio": event.start.toISOString().slice(0,10),  // Assicurati che la data sia in formato stringa
-            "Fine": event.end.toISOString().slice(0, 10),     // Assicurati che la data sia in formato stringa
+            "Appartamento": event.title,
+            "Inizio": event.start.toLocaleDateString("it-IT").toString().slice(0, 10),  // Assicurati che la data sia in formato stringa
+            "Fine": event.end.toLocaleDateString("it-IT").toString().slice(0, 10),     // Assicurati che la data sia in formato stringa
             "Ospiti": event.guest,
             "Letti Matrimoniali": event.doubleBed,
             "Letti Singoli": event.singleBed
