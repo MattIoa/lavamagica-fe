@@ -51,7 +51,7 @@ export const useCalendarStore = () => {
 
 
     const startLoadingEvents = async(username) => {
-        if(localStorage.getItem('selectedView') === '') {
+        if(localStorage.getItem('selectedView') === '' || !localStorage.getItem('selectedView')) {
             try {
                 const {data} = await calendarApi.get('/events');
                 const events = convertEventsToDateEvents(data.eventos);
