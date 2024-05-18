@@ -13,7 +13,8 @@ export const ExportEventsButton = () => {
             "Fine": event.end.toLocaleDateString("it-IT").toString().slice(0, 10),     // Assicurati che la data sia in formato stringa
             "Ospiti": event.guest,
             "Letti Matrimoniali": event.doubleBed,
-            "Letti Singoli": event.singleBed
+            "Letti Singoli": event.singleBed,
+            "Copri Piumino": event.duvetCover
         }));
 
         // Creazione di un nuovo workbook e di un worksheet
