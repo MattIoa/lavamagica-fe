@@ -63,6 +63,7 @@ export const CalendarModal = () => {
         singleBed: '',
         doubleBed: '',
         bathRoom: '',
+        duvetCover: '',
         start: new Date(),
         end: addHours(new Date(), 2),
     });
@@ -182,18 +183,27 @@ export const CalendarModal = () => {
                 <div style={inputContainer}>
                     <div style={labelContainer}>
                         <span>Ospiti</span>
-                        <InputNumber value={formValues.guest} onValueChange={onInputChanged} min={0} max={100} placeholder={'0'}
+                        <InputNumber value={formValues.guest} onValueChange={onInputChanged} min={0} max={100}
+                                     placeholder={'0'}
                                      name='guest'/>
                     </div>
                     <div style={labelContainer}>
                         <span>Letti Sing.</span>
-                        <InputNumber value={formValues.singleBed} onValueChange={onInputChanged} min={0} max={100} placeholder={'0'}
+                        <InputNumber value={formValues.singleBed} onValueChange={onInputChanged} min={0} max={100}
+                                     placeholder={'0'}
                                      name='singleBed'/>
                     </div>
                     <div style={labelContainer}>
                         <span>Letti Matr.</span>
-                        <InputNumber value={formValues.doubleBed} onValueChange={onInputChanged} min={0} max={100} placeholder={'0'}
+                        <InputNumber value={formValues.doubleBed} onValueChange={onInputChanged} min={0} max={100}
+                                     placeholder={'0'}
                                      name='doubleBed'/>
+                    </div>
+                    <div style={labelContainer}>
+                        <span>Copri Piumino</span>
+                        <InputNumber value={formValues.duvetCover} onValueChange={onInputChanged} min={0} max={100}
+                                     placeholder={'0'}
+                                     name='duvetCover'/>
                     </div>
                 </div>
                 <button
