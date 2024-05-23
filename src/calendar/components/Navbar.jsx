@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { useCalendarStore } from "../../hooks/useCalendarStore";
+import { SelectApartment } from './SelectApartment';
 
 export const Navbar = () => {
     const { startLogout, user } = useAuthStore();
@@ -13,12 +14,17 @@ export const Navbar = () => {
 
     const [selectedUsername, setSelectedUsername] = useState('');
     const [selectedView, setSelectedView] = useState('');
+    const [selectedApartment, setSelectedApartment] = useState('');
 
     const handleUserSelect = async (event) => {
         setSelectedUsername(event.target.value);
         await startLoadingEvents(event.target.value);
         localStorage.setItem('selectedUsername', event.target.value);
         window.location.reload();
+    };
+
+    const handleApartmentSelect = (event) => {
+        setSelectedApartment(event.target.value);
     };
 
     const changeViewEvents = async (event) => {
@@ -50,7 +56,6 @@ export const Navbar = () => {
             setSelectedView(selectedView);
         }
     }, []);
-
 
     return (
         <div className="navbar navbar-dark bg-dark mb-4 px-4">
@@ -84,6 +89,10 @@ export const Navbar = () => {
                     <option value="filterEndEvents">Check-out</option>
                 </select>
             )}
+                <SelectApartment
+                    selectedApartment={selectedApartment}
+                    handleApartmentSelect={handleApartmentSelect}
+                />
             <button className="btn btn-outline-danger" onClick={startLogout}>
                 <i className="fas fa-sign-out-alt"></i>
                 &nbsp;
@@ -91,4 +100,4 @@ export const Navbar = () => {
             </button>
         </div>
     );
-}
+};

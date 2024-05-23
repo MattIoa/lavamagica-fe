@@ -1,13 +1,13 @@
 import { useDispatch , useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { convertEventsToDateEvents } from '../helpers';
-import {  onAddNewEvent , onDeleteEvent, onSetActiveEvent, onUpdateEvent, onLoadEvents} from '../store';
+import {  onAddNewEvent , onDeleteEvent, onSetActiveEvent, onUpdateEvent, onLoadEvents, onLoadApartments } from '../store';
 import { calendarApi } from '../api';
 
 export const useCalendarStore = () => {
 
     const dispatch = useDispatch();
-    const { events, activeEvent, filteredEvents } = useSelector( state => state.calendar );
+    const { events, activeEvent, filteredEvents, apartments  } = useSelector( state => state.calendar );
     const { user } = useSelector( state => state.auth );
 
     const setActiveEvent = ( calendarEvent ) => {
@@ -170,6 +170,26 @@ export const useCalendarStore = () => {
         }
     };
 
+    const startSavingApartment = async (apartment) => {
+        try {
+            const { data } = await calendarApi.post('/apartment', apartment);
+            console.log(data); // Controlla la risposta del server
+        } catch (error) {
+            console.log(error);
+            Swal.fire('Errore durante il salvataggio', error.response.data.msg, 'error');
+        }
+    };
+    const startLoadingApartments = async () => {
+        try {
+            const { data } = await calendarApi.get('/apartment');
+            dispatch(onLoadApartments(data.apartments));
+        } catch (error) {
+            console.log('Errore nel caricamento degli appartamenti');
+            console.log(error);
+        }
+    };
+
+
 
 
     return {
@@ -177,6 +197,7 @@ export const useCalendarStore = () => {
         activeEvent,
         events,
         filteredEvents,
+        apartments,
         hasEventSelected: !!activeEvent,
 
         //* Métodos
@@ -186,5 +207,7 @@ export const useCalendarStore = () => {
         startLoadingEvents,
         filterStartEvents,
         filterEndEvents,
+        startSavingApartment,
+        startLoadingApartments
     }
 }
