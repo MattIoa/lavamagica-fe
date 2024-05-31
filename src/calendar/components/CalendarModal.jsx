@@ -64,6 +64,7 @@ export const CalendarModal = () => {
         doubleBed: '',
         bathRoom: '',
         duvetCover: '',
+        note: '',
         start: new Date(),
         end: addHours(new Date(), 2),
     });
@@ -179,6 +180,18 @@ export const CalendarModal = () => {
                         onChange={onInputChanged}
                     />
                 </div>
+                <div className="form-group mb-2">
+                    <label style={{marginBottom: '10px'}}>Note</label>
+                    <input
+                        style={{height: '50px'}}
+                        type="text"
+                        className={`form-control ${titleClass}`}
+                        name="note"
+                        autoComplete="on"
+                        value={formValues.note}
+                        onChange={onInputChanged}
+                    />
+                </div>
 
                 <div style={inputContainer}>
                     <div style={labelContainer}>
@@ -205,6 +218,7 @@ export const CalendarModal = () => {
                                      placeholder={'0'}
                                      name='duvetCover'/>
                     </div>
+
                 </div>
                 <button
                     type="submit"
