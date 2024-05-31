@@ -16,6 +16,8 @@ export const FabAddNew = () => {
             guest: '',
             singleBed: '',
             doubleBed: '',
+            note: '',
+            duvetCover: '',
             start: new Date(),
             end: addHours( new Date(), 2 ),
             bgColor: '#fafafa',
