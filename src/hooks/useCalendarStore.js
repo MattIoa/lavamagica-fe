@@ -14,26 +14,26 @@ export const useCalendarStore = () => {
     };
 
     const startSavingEvent = async (calendarEvent) => {
-        // Validation for event start date
-        const currentDate = new Date();
-        const startDate = new Date(calendarEvent.start);
-        const timeDifference = startDate.getTime() - currentDate.getTime();
-        const hoursDifference = timeDifference / (1000 * 60 * 60);
+        const isSavingConditionEnabled = localStorage.getItem('isSavingConditionEnabled') === 'true';
 
-        if (hoursDifference < 48) {
-            Swal.fire('Error', 'Contattare il numero 3758717797 o 32720007515 per aggiungere un check-in con meno di 48 ore di anticipo.', 'error');
-            return;
+        if (isSavingConditionEnabled) {
+            const currentDate = new Date();
+            const startDate = new Date(calendarEvent.start);
+            const timeDifference = startDate.getTime() - currentDate.getTime();
+            const hoursDifference = timeDifference / (1000 * 60 * 60);
+
+            if (hoursDifference < 48) {
+                Swal.fire('Error', 'Contattare il numero 3758717797 o 32720007515 per aggiungere un check-in con meno di 48 ore di anticipo.', 'error');
+                return;
+            }
         }
 
         try {
-            // Todo bien
             if (calendarEvent.id) {
-                // Actualizando
                 await calendarApi.put(`/events/${calendarEvent.id}`, calendarEvent);
                 dispatch(onUpdateEvent({ ...calendarEvent }));
                 return;
             }
-            // Creando
             const { data } = await calendarApi.post('/events', calendarEvent);
             dispatch(onAddNewEvent({ ...calendarEvent, id: data.evento.id, user }));
         } catch (error) {
@@ -43,7 +43,6 @@ export const useCalendarStore = () => {
     };
 
     const startDeletingEvent = async () => {
-        // Todo: Llegar al backend
         try {
             await calendarApi.delete(`/events/${activeEvent.id}`);
             dispatch(onDeleteEvent());
@@ -78,10 +77,9 @@ export const useCalendarStore = () => {
                 const { data } = await calendarApi.get('/events');
                 const events = convertEventsToDateEvents(data.eventos);
 
-                // Aggiorna la data di fine degli eventi per essere un'ora dopo la data di inizio
                 const updatedEvents = events.map(event => ({
                     ...event,
-                    end: new Date(new Date(event.start).getTime()) // Aggiunge un'ora
+                    end: new Date(new Date(event.start).getTime())
                 }));
 
                 if (username) {
@@ -104,7 +102,7 @@ export const useCalendarStore = () => {
 
                 const updatedEvents = events.map(event => ({
                     ...event,
-                    start: new Date(new Date(event.end).getTime()) // Aggiunge un'ora
+                    start: new Date(new Date(event.end).getTime())
                 }));
 
                 if (username) {
@@ -128,10 +126,9 @@ export const useCalendarStore = () => {
             const { data } = await calendarApi.get('/events');
             const events = convertEventsToDateEvents(data.eventos);
 
-            // Aggiorna la data di fine degli eventi per essere un'ora dopo la data di inizio
             const updatedEvents = events.map(event => ({
                 ...event,
-                end: new Date(new Date(event.start).getTime()) // Aggiunge un'ora
+                end: new Date(new Date(event.start).getTime())
             }));
 
             if (username) {
@@ -156,7 +153,7 @@ export const useCalendarStore = () => {
 
             const updatedEvents = events.map(event => ({
                 ...event,
-                start: new Date(new Date(event.end).getTime()) // Aggiunge un'ora
+                start: new Date(new Date(event.end).getTime())
             }));
 
             if (username) {
