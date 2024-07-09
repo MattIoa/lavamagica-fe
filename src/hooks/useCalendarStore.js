@@ -23,7 +23,7 @@ export const useCalendarStore = () => {
             const hoursDifference = timeDifference / (1000 * 60 * 60);
 
             if (hoursDifference < 48) {
-                Swal.fire('Error', 'Contattare il numero 3758717797 o 32720007515 per aggiungere un check-in con meno di 48 ore di anticipo.', 'error');
+                Swal.fire('Error', 'Contattare il numero 3758717797 o 3272007515 per aggiungere un check-in con meno di 48 ore di anticipo.', 'error');
                 return;
             }
         }
