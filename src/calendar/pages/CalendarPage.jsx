@@ -56,6 +56,7 @@ export const CalendarPage = () => {
 
 
   useEffect(() => {
+      localStorage.setItem('isSavingConditionEnabled', 'true');
       const selectedUsername = localStorage.getItem('selectedUsername');
     if (selectedUsername) {
       startLoadingEvents(selectedUsername);
