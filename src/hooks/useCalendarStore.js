@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { convertEventsToDateEvents } from '../helpers';
 import { onAddNewEvent, onDeleteEvent, onSetActiveEvent, onUpdateEvent, onLoadEvents } from '../store';
 import { calendarApi } from '../api';
+import { format, isBefore } from 'date-fns';
 
 export const useCalendarStore = () => {
     const dispatch = useDispatch();
@@ -44,6 +45,14 @@ export const useCalendarStore = () => {
 
     const startDeletingEvent = async () => {
         try {
+            const currentDate = new Date();
+            const eventDate = new Date(activeEvent.start); // Utilizza activeEvent.start per la data dell'evento
+
+            if (isBefore(eventDate, currentDate)) {
+                Swal.fire("Errore nell'eliminazione", "Non puoi cancellare un evento passato.", 'error');
+                return;
+            }
+
             await calendarApi.delete(`/events/${activeEvent.id}`);
             dispatch(onDeleteEvent());
         } catch (error) {
