@@ -14,7 +14,8 @@ export const ExportEventsButton = () => {
             "Ospiti": event.guest,
             "Letti Matrimoniali": event.doubleBed,
             "Letti Singoli": event.singleBed,
-            "Copri Piumino": event.duvetCover
+            "Copri Piumino": event.duvetCover,
+            "Federe": event.pillowCase
         }));
 
         // Creazione di un nuovo workbook e di un worksheet
