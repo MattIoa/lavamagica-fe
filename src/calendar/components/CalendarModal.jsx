@@ -64,6 +64,7 @@ export const CalendarModal = () => {
         doubleBed: '',
         bathRoom: '',
         duvetCover: '',
+        pillowCase: '',
         note: '',
         start: new Date(),
         end: addHours(new Date(), 2),
@@ -217,6 +218,12 @@ export const CalendarModal = () => {
                         <InputNumber value={formValues.duvetCover} onValueChange={onInputChanged} min={0} max={100}
                                      placeholder={'0'}
                                      name='duvetCover'/>
+                    </div>
+                    <div style={labelContainer}>
+                        <span>Federe</span>
+                        <InputNumber value={formValues.pillowCase} onValueChange={onInputChanged} min={0} max={100}
+                                     placeholder={'0'}
+                                     name='pillowCase'/>
                     </div>
 
                 </div>
