@@ -1,25 +1,15 @@
-import {useMemo, useState, useEffect} from 'react';
-import {addHours, differenceInSeconds} from 'date-fns';
-
+import { useMemo, useState, useEffect } from 'react';
+import { addHours, differenceInSeconds } from 'date-fns';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-
 import Modal from 'react-modal';
-
-import DatePicker, {registerLocale} from 'react-datepicker';
+import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-import {useCalendarStore, useUiStore} from '../../hooks';
-import './CalendarModal.css'
-
-import "primereact/resources/themes/lara-light-blue/theme.css";
-import {InputNumber} from 'primereact/inputnumber';
-
-
+import { useCalendarStore, useUiStore } from '../../hooks';
+import './CalendarModal.css';
 import it from 'date-fns/locale/it';
 
 registerLocale('it', it);
-
 
 const customStyles = {
     content: {
@@ -34,27 +24,24 @@ const customStyles = {
 
 const inputContainer = {
     display: 'flex',
-    gap:'10px',
+    gap: '10px',
     justifyContent: 'space-between',
     margin: '30px 0 30px 0',
-    flexWrap:'wrap'
-}
+    flexWrap: 'wrap',
+};
+
 const labelContainer = {
     display: 'flex',
     flexBasis: '45%',
     justifyContent: 'space-between',
-    alignItems: 'center'
-}
+    alignItems: 'center',
+};
+
 Modal.setAppElement('#root');
 
-
 export const CalendarModal = () => {
-
-    const {isDateModalOpen, closeDateModal} = useUiStore();
-
-    const {activeEvent, startSavingEvent} = useCalendarStore();
-
-
+    const { isDateModalOpen, closeDateModal } = useUiStore();
+    const { activeEvent, startSavingEvent } = useCalendarStore();
     const [formSubmitted, setFormSubmitted] = useState(false);
 
     const [formValues, setFormValues] = useState({
@@ -72,46 +59,39 @@ export const CalendarModal = () => {
 
     const titleClass = useMemo(() => {
         if (!formSubmitted) return '';
-
-        return (formValues.title.length > 0)
-            ? ''
-            : 'is-invalid';
-
-    }, [formValues.title, formSubmitted])
-
+        return formValues.title.length > 0 ? '' : 'is-invalid';
+    }, [formValues.title, formSubmitted]);
 
     useEffect(() => {
         if (activeEvent !== null) {
-            setFormValues({...activeEvent});
+            setFormValues({ ...activeEvent });
         }
+    }, [activeEvent]);
 
-    }, [activeEvent])
-
-    const onInputChanged = ({target}) => {
+    const onInputChanged = ({ target }) => {
         setFormValues({
             ...formValues,
-            [target.name]: target.value
-        })
-    }
+            [target.name]: target.value,
+        });
+    };
 
     const onDateChanged = (event, changing) => {
         setFormValues({
             ...formValues,
-            [changing]: event
-        })
-    }
+            [changing]: event,
+        });
+    };
 
     const onCloseModal = () => {
         console.log('cerrando modal');
         closeDateModal();
-    }
+    };
 
     const onSubmit = async (event) => {
         event.preventDefault();
         setFormSubmitted(true);
 
         const difference = differenceInSeconds(formValues.end, formValues.start);
-
         if (isNaN(difference) || difference <= 0) {
             Swal.fire('Fechas incorrectas', 'Revisar las fechas ingresadas', 'error');
             console.log('Error en fechas');
@@ -124,8 +104,7 @@ export const CalendarModal = () => {
         await startSavingEvent(formValues);
         closeDateModal();
         setFormSubmitted(false);
-
-    }
+    };
 
     return (
         <Modal
@@ -135,18 +114,16 @@ export const CalendarModal = () => {
             className="modal"
             overlayClassName="modal-fondo"
             closeTimeoutMS={200}
-
         >
             <h1> Nuovo Evento </h1>
-            <hr/>
+            <hr />
             <form className="container" onSubmit={onSubmit}>
-
                 <div className="form-group mb-2">
-                    <label className='check-label'>Check-in</label>
+                    <label className="check-label">Check-in</label>
                     <DatePicker
                         selected={formValues.start}
                         onChange={(event) => onDateChanged(event, 'start')}
-                        className="form-control"
+                        className="form-control custom-input"
                         dateFormat="Pp"
                         showTimeSelect
                         locale="it"
@@ -155,12 +132,12 @@ export const CalendarModal = () => {
                 </div>
 
                 <div className="form-group mb-2">
-                    <label className='check-label'>Check-out</label>
+                    <label className="check-label">Check-out</label>
                     <DatePicker
                         minDate={formValues.start}
                         selected={formValues.end}
                         onChange={(event) => onDateChanged(event, 'end')}
-                        className="form-control"
+                        className="form-control custom-input"
                         dateFormat="Pp"
                         showTimeSelect
                         locale="it"
@@ -168,13 +145,13 @@ export const CalendarModal = () => {
                     />
                 </div>
 
-                <hr/>
+                <hr />
                 <div className="form-group mb-2">
-                    <label style={{marginBottom: '10px'}}>Appartamento</label>
+                    <label style={{ marginBottom: '10px' }}>Appartamento</label>
                     <input
-                        style={{height: '50px'}}
+                        style={{ height: '50px' }}
                         type="text"
-                        className={`form-control ${titleClass}`}
+                        className={`form-control custom-input ${titleClass}`}
                         name="title"
                         autoComplete="on"
                         value={formValues.title}
@@ -182,11 +159,11 @@ export const CalendarModal = () => {
                     />
                 </div>
                 <div className="form-group mb-2">
-                    <label style={{marginBottom: '10px'}}>Note</label>
+                    <label style={{ marginBottom: '10px' }}>Note</label>
                     <input
-                        style={{height: '50px'}}
+                        style={{ height: '50px' }}
                         type="text"
-                        className={`form-control ${titleClass}`}
+                        className={`form-control custom-input ${titleClass}`}
                         name="note"
                         autoComplete="on"
                         value={formValues.note}
@@ -195,48 +172,77 @@ export const CalendarModal = () => {
                 </div>
 
                 <div style={inputContainer}>
-                    <div style={labelContainer}>
+                    <div style={labelContainer} className="label-container">
                         <span>Ospiti</span>
-                        <InputNumber value={formValues.guest} onValueChange={onInputChanged} min={0} max={100}
-                                     placeholder={'0'}
-                                     name='guest'/>
+                        <input
+                            type="number"
+                            value={formValues.guest}
+                            onChange={onInputChanged}
+                            min={0}
+                            max={100}
+                            placeholder="0"
+                            name="guest"
+                            className="form-control custom-input"
+                        />
                     </div>
-                    <div style={labelContainer}>
+                    <div style={labelContainer} className="label-container">
                         <span>Letti Sing.</span>
-                        <InputNumber value={formValues.singleBed} onValueChange={onInputChanged} min={0} max={100}
-                                     placeholder={'0'}
-                                     name='singleBed'/>
+                        <input
+                            type="number"
+                            value={formValues.singleBed}
+                            onChange={onInputChanged}
+                            min={0}
+                            max={100}
+                            placeholder="0"
+                            name="singleBed"
+                            className="form-control custom-input"
+                        />
                     </div>
-                    <div style={labelContainer}>
+                    <div style={labelContainer} className="label-container">
                         <span>Letti Matr.</span>
-                        <InputNumber value={formValues.doubleBed} onValueChange={onInputChanged} min={0} max={100}
-                                     placeholder={'0'}
-                                     name='doubleBed'/>
+                        <input
+                            type="number"
+                            value={formValues.doubleBed}
+                            onChange={onInputChanged}
+                            min={0}
+                            max={100}
+                            placeholder="0"
+                            name="doubleBed"
+                            className="form-control custom-input"
+                        />
                     </div>
-                    <div style={labelContainer}>
+                    <div style={labelContainer} className="label-container">
                         <span>Copri Piumino</span>
-                        <InputNumber value={formValues.duvetCover} onValueChange={onInputChanged} min={0} max={100}
-                                     placeholder={'0'}
-                                     name='duvetCover'/>
+                        <input
+                            type="number"
+                            value={formValues.duvetCover}
+                            onChange={onInputChanged}
+                            min={0}
+                            max={100}
+                            placeholder="0"
+                            name="duvetCover"
+                            className="form-control custom-input"
+                        />
                     </div>
-                    <div style={labelContainer}>
+                    <div style={labelContainer} className="label-container">
                         <span>Federe</span>
-                        <InputNumber value={formValues.pillowCase} onValueChange={onInputChanged} min={0} max={100}
-                                     placeholder={'0'}
-                                     name='pillowCase'/>
+                        <input
+                            type="number"
+                            value={formValues.pillowCase}
+                            onChange={onInputChanged}
+                            min={0}
+                            max={100}
+                            placeholder="0"
+                            name="pillowCase"
+                            className="form-control custom-input"
+                        />
                     </div>
-
                 </div>
-                <button
-                    type="submit"
-                    className="btn btn-outline-primary btn-block"
-                >
+                <button type="submit" className="btn btn-outline-primary btn-block">
                     <i className="far fa-save"></i>
                     <span> Salva</span>
                 </button>
-
             </form>
-
         </Modal>
-    )
-}
+    );
+};
