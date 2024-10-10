@@ -225,7 +225,7 @@ export const CalendarModal = () => {
                         />
                     </div>
                     <div style={labelContainer} className="label-container">
-                        <span>Federe</span>
+                        <span>Federe Extra</span>
                         <input
                             type="number"
                             value={formValues.pillowCase}
