@@ -212,7 +212,7 @@ export const CalendarModal = () => {
                         />
                     </div>
                     <div style={labelContainer} className="label-container">
-                        <span>Copri Piumino</span>
+                        <span>Lenzuolo-Copripiumino</span>
                         <input
                             type="number"
                             value={formValues.duvetCover}
