@@ -104,7 +104,7 @@ export const Navbar = () => {
                     onChange={handleToggleChange}
                 />
                 <label className="form-check-label">
-                    Condizione di salvataggio 48 ore
+                    Condizione di salvataggio 24 ore
                 </label>
             </div>
             )}
