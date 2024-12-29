@@ -31,81 +31,72 @@ export const ExportEventsButton = () => {
         setUnitCosts((prev) => ({ ...prev, [name]: parseFloat(value) || 0 }));
     };
 
+
     const exportToExcel = () => {
         const filteredEvents = getFilteredEvents();
 
-        // Ordina gli eventi per data di inizio
         const sortedEvents = filteredEvents.sort((a, b) => new Date(a.start) - new Date(b.start));
 
-        // Preparazione dei dati per il foglio di calcolo Excel
-        const data = sortedEvents.map((event, index) => {
-            const nextEvent = sortedEvents[index + 1]; // Ottieni l'evento successivo
-
-            // Se esiste un evento successivo, utilizza i suoi dati
-            const cleanCost = nextEvent ? unitCosts.cleanCost : 0;
-            const guestCost = nextEvent ? (nextEvent.guest || 0) * unitCosts.guest : 0;
-            const doubleBedCost = nextEvent ? (nextEvent.doubleBed || 0) * unitCosts.doubleBed : 0;
-            const singleBedCost = nextEvent ? (nextEvent.singleBed || 0) * unitCosts.singleBed : 0;
-            const duvetCoverCost = nextEvent ? (nextEvent.duvetCover || 0) * unitCosts.duvetCover : 0;
-            const pillowCaseCost = nextEvent ? (nextEvent.pillowCase || 0) * unitCosts.pillowCase : 0;
-
-            // Quantità dall'evento successivo
-            const guestQuantity = nextEvent ? nextEvent.guest || 0 : 0;
-            const doubleBedQuantity = nextEvent ? nextEvent.doubleBed || 0 : 0;
-            const singleBedQuantity = nextEvent ? nextEvent.singleBed || 0 : 0;
-            const duvetCoverQuantity = nextEvent ? nextEvent.duvetCover || 0 : 0;
-            const pillowCaseQuantity = nextEvent ? nextEvent.pillowCase || 0 : 0;
+        const data = sortedEvents.map((event) => {
+            const cleanCost = unitCosts.cleanCost || 0;
+            const guestQuantity = event.guest || 0;
+            const guestCost = guestQuantity * unitCosts.guest;
+            const doubleBedQuantity = event.doubleBed || 0;
+            const doubleBedCost = doubleBedQuantity * unitCosts.doubleBed;
+            const singleBedQuantity = event.singleBed || 0;
+            const singleBedCost = singleBedQuantity * unitCosts.singleBed;
+            const duvetCoverQuantity = event.duvetCover || 0;
+            const duvetCoverCost = duvetCoverQuantity * unitCosts.duvetCover;
+            const pillowCaseQuantity = event.pillowCase || 0;
+            const pillowCaseCost = pillowCaseQuantity * unitCosts.pillowCase;
 
             const totalCost = cleanCost + guestCost + doubleBedCost + singleBedCost + duvetCoverCost + pillowCaseCost;
 
             return {
+                'App': event.title,
                 'Data Pulizia': new Date(event.end).toLocaleDateString("it-IT"),
                 'Pulizia': cleanCost,
                 'Ospiti (Q.tà)': guestQuantity,
-                'Ospiti (€)': guestCost.toFixed(2),
-                'Letti Matr (Q.tà)': doubleBedQuantity,
-                'Letti Matr (€)': doubleBedCost.toFixed(2),
-                'Letti Sing (Q.tà)': singleBedQuantity,
-                'Letti Sing (€)': singleBedCost.toFixed(2),
-                'Copri Piumino (Q.tà)': duvetCoverQuantity,
-                'Copri Piumino (€)': duvetCoverCost.toFixed(2),
+                'Sing (Q.tà)': singleBedQuantity,
+                'Matr (Q.tà)': doubleBedQuantity,
+                'Rigati (Q.tà)': duvetCoverQuantity,
                 'Federe (Q.tà)': pillowCaseQuantity,
+                'Ospiti (€)': guestCost.toFixed(2),
+                'Letti Matr (€)': doubleBedCost.toFixed(2),
+                'Letti Sing (€)': singleBedCost.toFixed(2),
+                'Copri Piumino (€)': duvetCoverCost.toFixed(2),
                 'Federe (€)': pillowCaseCost.toFixed(2),
                 'Costo Totale (€)': totalCost.toFixed(2),
             };
         });
 
-        // Calcolo del totale di tutti i totali
         const grandTotal = data.reduce(
             (acc, item) => acc + parseFloat(item["Costo Totale (€)"]),
             0
         );
 
-        // Aggiungi una riga finale con il totale
         data.push({
-            'Data Pulizia': "TOTALE",
+            'Nome Evento': "TOTALE",
+            'Data Pulizia': "",
             'Pulizia': "",
             'Ospiti (Q.tà)': "",
-            'Ospiti (€)': "",
-            'Letti Matr (Q.tà)': "",
-            'Letti Matr (€)': "",
-            'Letti Sing (Q.tà)': "",
-            'Letti Sing (€)': "",
-            'Copri Piumino (Q.tà)': "",
-            'Copri Piumino (€)': "",
+            'Sing (Q.tà)': "",
+            'Matr (Q.tà)': "",
+            'Rigati (Q.tà)': "",
             'Federe (Q.tà)': "",
+            'Ospiti (€)': "",
+            'Letti Matr (€)': "",
+            'Letti Sing (€)': "",
+            'Copri Piumino (€)': "",
             'Federe (€)': "",
             'Costo Totale (€)': grandTotal.toFixed(2),
         });
 
-        // Creazione di un nuovo workbook e di un worksheet
         const wb = XLSX.utils.book_new();
         const ws = XLSX.utils.json_to_sheet(data);
 
-        // Aggiunta del worksheet al workbook
         XLSX.utils.book_append_sheet(wb, ws, "Eventi");
 
-        // Creazione del file Excel
         const wbout = XLSX.write(wb, { bookType: "xlsx", type: "binary" });
 
         function s2ab(s) {
@@ -114,8 +105,6 @@ export const ExportEventsButton = () => {
             for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
             return buf;
         }
-
-        // Salva il file sul computer dell'utente
         const blob = new Blob([s2ab(wbout)], { type: "application/octet-stream" });
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement("a");
@@ -125,9 +114,9 @@ export const ExportEventsButton = () => {
         link.click();
         document.body.removeChild(link);
 
-        // Chiudi la modale
         setIsModalOpen(false);
     };
+
 
 
 
