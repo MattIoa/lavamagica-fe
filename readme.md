@@ -37,10 +37,6 @@ Modal
 
 Deploy the application locally.
 
-Video-Demo CalendarApp
-[![Demo CalendarApp](images/video-deploy.png)](https://www.youtube.com/watch?v=HH-HYL1hpBg)
-
-
 
 backend repository: https://github.com/theinsideshine/nodeJs-calendar
 
